@@ -1,0 +1,31 @@
+---
+- name: debuging the vpc
+  debug:
+    var: vpc
+- name: starting creating pub subnets
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{loc }}"
+    state: present
+    tags:
+      name: "public subnet"
+    cidr: "{{subnet.public}}"
+  register: pub_subnet
+
+- name: starting creating pvt subnets
+  amazon.aws.ec2_vpc_subnet:
+    vpc_id: "{{ vpc.vpc.id }}"
+    region: "{{loc }}"
+    state: present
+    tags:
+      name: "private subnet"
+    cidr: "{{subnet.private}}"
+  register: pvt_subnet
+
+  notify:
+     - route_table_create.yml
+
+- name: seting fact
+  set_fact:
+    pub_subnet: "{{pub_subnet}}"
+    pvt_subnet: "{{pvt_subnet}}"
