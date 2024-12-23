@@ -1,0 +1,9 @@
+---
+- name: start creating gateway
+  amazon.aws.ec2_vpc_igw:
+    vpc_id: "{{vpc.vpc.id}}"
+    tags:
+      name: "IGW-01"
+    region: "{{loc}}"
+    state: present
+  register: igw
