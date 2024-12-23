@@ -1,0 +1,8 @@
+---
+- name: Playbook for creating infrastructure setup on AWS
+  hosts: localhost
+  vars_files:
+    - vars/main.yml  # Load variables from vars/main.yml file
+
+  roles:
+    - infra           # Call the 'infra' role
