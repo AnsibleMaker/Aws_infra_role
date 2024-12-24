@@ -1,0 +1,173 @@
+root@ip-172-16-0-13:/home/ubuntu/ansible/aws/roles# ansible-playbook main.yml
+[WARNING]: No inventory was parsed, only implicit localhost is available
+[WARNING]: provided hosts list is empty, only localhost is available. Note that the implicit localhost does not match 'all'
+
+PLAY [Playbook for creating infrastructure setup on AWS] ****************************************************************************************************
+
+TASK [Gathering Facts] **************************************************************************************************************************************
+ok: [localhost]
+
+TASK [infra : Started VPC creation] *************************************************************************************************************************
+changed: [localhost]
+
+TASK [infra : set a fact] ***********************************************************************************************************************************
+ok: [localhost]
+
+TASK [infra : debuging the vpc] *****************************************************************************************************************************
+ok: [localhost] => {
+    "vpc": {
+        "changed": true,
+        "failed": false,
+        "vpc": {
+            "cidr_block": "10.1.0.0/24",
+            "cidr_block_association_set": [
+                {
+                    "association_id": "vpc-cidr-assoc-030c3f06b99f640be",
+                    "cidr_block": "10.1.0.0/24",
+                    "cidr_block_state": {
+                        "state": "associated"
+                    }
+                }
+            ],
+            "dhcp_options_id": "dopt-0b7614da6686f5c51",
+            "id": "vpc-0070724f9c285d37e",
+            "instance_tenancy": "default",
+            "is_default": false,
+            "name": "vpc-through-code",
+            "owner_id": "619071356219",
+            "state": "available",
+            "tags": {
+                "Name": "vpc-through-code"
+            }
+        }
+    }
+}
+
+TASK [infra : starting creating pub subnets] ****************************************************************************************************************
+changed: [localhost]
+
+TASK [infra : starting creating pvt subnets] ****************************************************************************************************************
+changed: [localhost]
+
+TASK [infra : seting fact] **********************************************************************************************************************************
+ok: [localhost]
+
+TASK [infra : start creating gateway] ***********************************************************************************************************************
+changed: [localhost]
+
+TASK [infra : started creating security group] **************************************************************************************************************
+changed: [localhost]
+
+TASK [infra : set fact for security group] ******************************************************************************************************************
+ok: [localhost]
+
+TASK [infra : debuging vars] ********************************************************************************************************************************
+ok: [localhost] => {
+    "security_group": {
+        "changed": true,
+        "description": "security grp",
+        "failed": false,
+        "group_id": "sg-0617f4d98f6f745e0",
+        "group_name": "security-group-public",
+        "ip_permissions": [
+            {
+                "from_port": 80,
+                "ip_protocol": "tcp",
+                "ip_ranges": [
+                    {
+                        "cidr_ip": "0.0.0.0/0"
+                    }
+                ],
+                "ipv6_ranges": [],
+                "prefix_list_ids": [],
+                "to_port": 80,
+                "user_id_group_pairs": []
+            },
+            {
+                "ip_protocol": "-1",
+                "ip_ranges": [
+                    {
+                        "cidr_ip": "0.0.0.0/0"
+                    }
+                ],
+                "ipv6_ranges": [],
+                "prefix_list_ids": [],
+                "user_id_group_pairs": []
+            },
+            {
+                "from_port": 22,
+                "ip_protocol": "tcp",
+                "ip_ranges": [
+                    {
+                        "cidr_ip": "0.0.0.0/0"
+                    }
+                ],
+                "ipv6_ranges": [],
+                "prefix_list_ids": [],
+                "to_port": 22,
+                "user_id_group_pairs": []
+            }
+        ],
+        "ip_permissions_egress": [
+            {
+                "ip_protocol": "-1",
+                "ip_ranges": [
+                    {
+                        "cidr_ip": "0.0.0.0/0"
+                    }
+                ],
+                "ipv6_ranges": [],
+                "prefix_list_ids": [],
+                "user_id_group_pairs": []
+            }
+        ],
+        "owner_id": "619071356219",
+        "tags": {},
+        "vpc_id": "vpc-0070724f9c285d37e"
+    }
+}
+
+TASK [infra : debuging pub var] *****************************************************************************************************************************
+ok: [localhost] => {
+    "pub_subnet": {
+        "changed": true,
+        "failed": false,
+        "subnet": {
+            "assign_ipv6_address_on_creation": false,
+            "availability_zone": "us-east-1a",
+            "availability_zone_id": "use1-az4",
+            "available_ip_address_count": 123,
+            "cidr_block": "10.1.0.0/25",
+            "default_for_az": false,
+            "enable_dns64": false,
+            "id": "subnet-0c23cb570f47e40ad",
+            "ipv6_association_id": "",
+            "ipv6_cidr_block": "",
+            "ipv6_cidr_block_association_set": [],
+            "ipv6_native": false,
+            "map_customer_owned_ip_on_launch": false,
+            "map_public_ip_on_launch": false,
+            "owner_id": "619071356219",
+            "private_dns_name_options_on_launch": {
+                "enable_resource_name_dns_a_record": false,
+                "enable_resource_name_dns_aaaa_record": false,
+                "hostname_type": "ip-name"
+            },
+            "state": "available",
+            "subnet_arn": "arn:aws:ec2:us-east-1:619071356219:subnet/subnet-0c23cb570f47e40ad",
+            "tags": {
+                "name": "public subnet"
+            },
+            "vpc_id": "vpc-0070724f9c285d37e"
+        }
+    }
+}
+
+TASK [infra : start creating ec2 machine] *******************************************************************************************************************
+changed: [localhost]
+
+RUNNING HANDLER [infra : route tables] **********************************************************************************************************************
+changed: [localhost]
+
+PLAY RECAP **************************************************************************************************************************************************
+localhost                  : ok=14   changed=7    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
