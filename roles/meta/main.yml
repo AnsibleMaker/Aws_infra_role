@@ -1,0 +1,5 @@
+dependencies: []
+handlers:
+  - file: main.yml
+vars:
+  - file: main.yml
