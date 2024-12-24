@@ -21,9 +21,7 @@
       name: "private subnet"
     cidr: "{{subnet.private}}"
   register: pvt_subnet
-
-  notify:
-     - route_table_create.yml
+  notify: route tables
 
 - name: seting fact
   set_fact:
