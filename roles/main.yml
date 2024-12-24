@@ -1,9 +1,6 @@
-root@ip-172-16-0-13:/home/ubuntu/ansible/aws/roles# cat main.yml
 ---
-- name: Playbook for creating infrastructure setup on AWS
-  hosts: localhost
-  vars_files:
-    - vars/main.yml  # Load variables from vars/main.yml file
-
-  roles:
-    - infra           # Call the 'infra' role
+- import_tasks: vpc.yml
+- import_tasks: subnets.yml
+- import_tasks: igw.yml
+- import_tasks: security.yml
+- import_tasks: ec2.yml
